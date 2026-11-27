@@ -750,7 +750,7 @@ html.t2lmono #v-prestamos .ic,html.t2lmono #v-amparos .ic,html.t2lmono #v-produc
     <div class="logo">🔑</div>
     <h1 id="nptitle">Crea tu contraseña</h1>
     <p class="sub" id="npsub">Es tu primer acceso. Elige una contraseña que solo tú conozcas.</p>
-    <input id="np1" type="password" placeholder="Nueva contraseña (mínimo 8)" autocomplete="new-password">
+    <input id="np1" type="password" placeholder="Nueva contraseña (mínimo 4)" autocomplete="new-password">
     <input id="np2" type="password" placeholder="Repite la contraseña" autocomplete="new-password">
     <button id="npgo" class="primary">Guardar y entrar</button>
     <button id="npcancel" class="ghost" style="display:none;width:100%;margin-top:10px;padding:13px">Cancelar</button>
@@ -2378,7 +2378,7 @@ function enterHome(session){
 async function savePass(){
   const e=$("nperr"); e.textContent="";
   const a=$("np1").value, b=$("np2").value;
-  if(a.length<8){ e.textContent="Usa al menos 8 caracteres."; return; }
+  if(a.length<4){ e.textContent="Usa al menos 4 caracteres."; return; }
   if(a!==b){ e.textContent="Las contraseñas no coinciden."; return; }
   const btn=$("npgo"); btn.disabled=true;
   const { data, error } = await sb.auth.updateUser({ password:a, data:{ must_change:false } });
