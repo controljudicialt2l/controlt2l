@@ -395,7 +395,29 @@ button.ghost{border:1px solid var(--line);background:var(--card);color:var(--tex
 .trib .btn.g{background:none;border:1px solid var(--rule);color:var(--ink)}
 .trib .btn.d{background:none;border:1px solid var(--bad);color:var(--bad)}
 /* pestañas subrayadas */
-.trib .tabs{margin-top:20px;border-bottom:1px solid var(--rule)}
+.trib .tabs{margin-top:20px;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:8px}
+.trib .tabs #seg{flex:1;min-width:0}
+.trib #dl{flex:none;display:inline-flex;align-items:center;gap:6px;padding:7px 12px;font-size:13px;margin-bottom:4px}
+.trib #dl[hidden]{display:none}
+.trib #dl svg{width:15px;height:15px}
+.trib #dl{color:var(--ink);border:1px solid var(--rule);background:var(--paper)}
+:root[data-theme="dark"] .trib .btn.g{color:var(--ink)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .trib .btn.g{color:var(--ink)}}
+:root[data-theme="dark"] .trib .who button.on{color:#0e1420}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .trib .who button.on{color:#0e1420}}
+@media(max-width:560px){.trib #dl span{display:none}.trib #dl{padding:8px 10px}}
+.trib .legend{align-items:center}
+.trib .mineb{margin-left:auto;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--rule);background:none;color:var(--ink);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;white-space:nowrap}
+.trib .mineb svg{width:14px;height:14px}
+.trib .mineb.on{background:var(--accent);border-color:var(--accent);color:#fff}
+:root[data-theme="dark"] .trib .mineb.on{color:#0e1420}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .trib .mineb.on{color:#0e1420}}
+.trib .who{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 14px}
+.trib .who button{border:1px solid var(--rule);background:none;color:var(--muted);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600}
+.trib .who button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.trib .notes{max-height:52vh;overflow:auto;padding:6px;display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin:6px 0 4px}
+.trib .notes canvas{width:210px;height:auto;border-radius:3px;box-shadow:0 6px 16px rgba(0,0,0,.28),0 1px 2px rgba(0,0,0,.2)}
+.trib .nh{font-size:12.5px;color:var(--muted);text-align:center;margin:8px 0 0}
 .trib #seg{display:flex;flex-wrap:nowrap;background:none;border:0;border-radius:0;padding:0;gap:2px;overflow-x:auto;overflow-y:hidden;margin-bottom:-1px;scrollbar-width:none}
 .trib #seg::-webkit-scrollbar{display:none}
 .trib #seg button{flex:none;background:none;border:0;border-bottom:2px solid transparent;border-radius:0;box-shadow:none;color:var(--muted);font-size:14px;font-weight:500;padding:10px 14px;white-space:nowrap}
@@ -824,6 +846,7 @@ html.t2lmono #v-prestamos .ic,html.t2lmono #v-amparos .ic{background:linear-grad
       <button data-t="piden">Me pidieron</button>
       <button data-t="proxima">Próxima semana</button>
     </div>
+    <button class="btn g" id="dl" hidden title="Descargar hoja tamaño post-it"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg><span>Descargar</span></button>
   </div>
 
   <div class="paper">
@@ -842,6 +865,18 @@ html.t2lmono #v-prestamos .ic,html.t2lmono #v-amparos .ic{background:linear-grad
   <div id="dState"></div>
   <div class="dl" id="dList"></div>
   <div class="mb" id="dActs"></div>
+</div></div>
+
+<!-- Hoja post-it -->
+<div class="ov" id="ovHoja"><div class="sheet">
+  <button class="x" id="hX" aria-label="Cerrar" title="Cerrar">✕</button>
+  <h2>Hoja post-it</h2>
+  <p class="hint" id="hSub"></p>
+  <label>Quién solicitó (aparecen juntos en la hoja)</label>
+  <div class="who" id="hWho"></div>
+  <div class="notes" id="hNotes"></div>
+  <p class="nh" id="hNote"></p>
+  <div class="mb"><button class="btn g" id="hCancel">Cerrar</button><button class="btn" id="hGo">Descargar PDF</button></div>
 </div></div>
 
 <!-- Formulario -->
@@ -1173,7 +1208,7 @@ const API={
 };
 
 
-let items=[],tab="semana",editId=null,loading=true;
+let items=[],tab="semana",editId=null,loading=true,onlyMine=false;
 
 let tt;
 function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("on"),4500)}
@@ -1220,6 +1255,7 @@ function visible(){
     if(tab==="listos"&&i.estado!=="Listo")return false;
     if(tab==="pedi"&&i.solicito!==me)return false;
     if(tab==="piden"&&i.dirigido!==me)return false;
+    if(onlyMine&&(tab==="semana"||tab==="proxima")&&i.dirigido!==me)return false;
     /* Todos / Yo pedí / Me pidieron: solo lo activo (Listo ya terminó su ciclo) */
     if((tab==="todos"||tab==="pedi"||tab==="piden")&&i.estado==="Listo")return false;
     if(q&&![i.exp,uOf(i.solicito).username,uOf(i.dirigido).username,i.obs].join(" ").toLowerCase().includes(q))return false;
@@ -1241,7 +1277,7 @@ function render(){
   $("#week").textContent=tab==="semana"?`Semana del ${f(a)} al ${f(b)} · incluye lo vencido que sigue pendiente y lo ya entregado esta semana`
     :tab==="proxima"?`Semana del ${f(na)} al ${f(nb)}`:tab==="listos"?"Historial de concluidos: todos los amparos que quedaron en Listo, desde siempre.":"";
   $("#week").style.display=$("#week").textContent?"":"none";
-  $("#legend").innerHTML=users.map(u=>chip(u.user_id,true)).join("");
+  $("#legend").innerHTML=users.map(u=>chip(u.user_id,true)).join("")+((tab==="semana"||tab==="proxima")?`<button type="button" class="mineb${onlyMine?" on":""}" id="onlyMine" aria-pressed="${onlyMine}" title="Mostrar solo los expedientes que me pidieron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Solo los que me pidieron</button>`:"");
   const list=visible();
   $("#list").innerHTML=list.length?`<section class="sec"><div class="card">${list.map(i=>{
     const p=prio(i);
@@ -1254,7 +1290,93 @@ function render(){
   e.textContent=loading?"Cargando…":(tab==="semana"?"No hay amparos pendientes esta semana.":tab==="proxima"?"No hay amparos para la próxima semana.":tab==="listos"?"Aún no hay amparos concluidos.":"No hay amparos que mostrar.");
   e.style.display=list.length?"none":"block";
   $("#hd").style.display=list.length?"":"none";
+  $("#dl").hidden=!(onlyMine&&(tab==="semana"||tab==="proxima"));
 }
+
+/* Hoja tamaño post-it (76 × 76 mm): un bloque por usuario, en orden de fecha */
+const MM=83.6,PX=Math.round(MM/25.4*300),TOP=Math.round(18/25.4*300);
+let hoSel=new Set();
+const fDia=s=>{const[y,m,d]=s.split("-").map(Number);return new Date(y,m-1,d).toLocaleDateString("es-MX",{day:"numeric",month:"long"}).replace(" de "," ")};
+const venNote=i=>i.plazo==="48h"&&i.hora?fDia(i.vence).replace(/^(\d+ \w{3})\w*/,"$1")+" "+hhmm(i.hora)+" h":fDia(i.vence);
+/* Un bloque por quien SOLICITÓ; todos los usuarios juntos en la misma hoja */
+function hojaData(){
+  const g={};
+  visible().filter(i=>i.estado!=="Listo").sort((x,y)=>x.vence.localeCompare(y.vence)||(x.hora||"").localeCompare(y.hora||"")).forEach(i=>{(g[i.solicito]=g[i.solicito]||[]).push(i)});
+  return Object.entries(g).map(([id,l])=>({id,name:uOf(id).username,list:l})).sort((a,b)=>a.name.localeCompare(b.name));
+}
+const FAM='-apple-system,"Helvetica Neue",Helvetica,Arial,sans-serif';
+/* Una sola tira de 84 mm de ancho (10 % más grande que un post-it de 76 mm); el largo crece con lo que haya (sin cortes) */
+const HB={n:80,h:34,r:66};
+function hojaPages(paper){
+  const groups=hojaData().filter(g=>hoSel.has(g.id));if(!groups.length)return[];
+  const m=document.createElement("canvas").getContext("2d"),P=Math.round(PX*.08),W=PX-2*P;
+  const mw=(t,w,f)=>{m.font=`${w} ${f}px ${FAM}`;return m.measureText(t).width};
+  let wE=0,wV=0,wN=0;
+  groups.forEach(g=>{wN=Math.max(wN,mw(g.name,700,HB.n));g.list.forEach(i=>{wE=Math.max(wE,mw(i.exp,700,HB.r));wV=Math.max(wV,mw(venNote(i),500,HB.r))})});
+  const sc=Math.min(1.3,W/(wE+40+wV),W/wN),nH=Math.round(HB.n*sc*1.35),hH=Math.round(HB.h*sc*1.7),rH=Math.round(HB.r*sc*1.55),gap=Math.round(80*sc),colX=Math.round((wE+40)*sc);
+  const H=TOP+groups.reduce((a,g)=>a+nH+hH+g.list.length*rH,0)+gap*(groups.length-1)+P;
+  const c=document.createElement("canvas");c.width=PX;c.height=H;const x=c.getContext("2d");
+  x.fillStyle=paper;x.fillRect(0,0,PX,H);x.textBaseline="top";x.fillStyle="#000";
+  let y=TOP;
+  groups.forEach(g=>{
+    x.font=`700 ${Math.round(HB.n*sc)}px ${FAM}`;x.fillText(g.name,P,y);y+=nH;
+    x.font=`700 ${Math.round(HB.h*sc)}px ${FAM}`;x.fillText("EXP.",P,y);x.fillText("VENCE",P+colX,y);
+    y+=hH-6;x.fillRect(P,y,W,3);y+=14;
+    g.list.forEach(i=>{
+      x.font=`700 ${Math.round(HB.r*sc)}px ${FAM}`;x.fillText(i.exp,P,y);
+      x.font=`500 ${Math.round(HB.r*sc)}px ${FAM}`;x.fillText(venNote(i),P+colX,y);y+=rH;
+    });
+    y+=gap-14;
+  });
+  return[c];
+}
+function hojaPaint(){
+  const data=hojaData();
+  $("#hWho").innerHTML=data.map(g=>`<button type="button" data-u="${g.id}" class="${hoSel.has(g.id)?"on":""}">${esc(g.name)} · ${g.list.length}</button>`).join("");
+  const pg=hojaPages("#fff3a0");
+  const box=$("#hNotes");box.innerHTML="";pg.forEach(c=>box.appendChild(c));
+  $("#hNote").textContent=pg.length?`Una sola tira de 84 mm de ancho (10 % más grande que un post-it de 76 mm); el largo crece con los expedientes. Arriba quedan 18 mm libres para engrapar. En el PDF todo va en blanco y negro, sin fondo.`:"Elige al menos un usuario.";
+  $("#hGo").disabled=!pg.length;
+}
+function pdfFrom(jpgs,pt){/* jpgs: [{u,h}] */
+  const enc=new TextEncoder(),parts=[],xr=[];let off=0;
+  const push=v=>{const b=typeof v==="string"?enc.encode(v):v;parts.push(b);off+=b.length};
+  const ob=(n,body)=>{xr[n]=off;push(n+" 0 obj\n"+body+"\nendobj\n")};
+  push("%PDF-1.4\n");
+  const N=jpgs.length;
+  ob(1,"<</Type/Catalog/Pages 2 0 R>>");
+  ob(2,`<</Type/Pages/Count ${N}/Kids[${jpgs.map((_,k)=>(3+3*k)+" 0 R").join(" ")}]>>`);
+  jpgs.forEach((j,k)=>{
+    const pg=3+3*k,ct=4+3*k,im=5+3*k,ph=+(j.h/PX*pt).toFixed(2),cs=`q ${pt} 0 0 ${ph} 0 0 cm /Im0 Do Q`;
+    ob(pg,`<</Type/Page/Parent 2 0 R/MediaBox[0 0 ${pt} ${ph}]/Contents ${ct} 0 R/Resources<</XObject<</Im0 ${im} 0 R>>>>>>`);
+    ob(ct,`<</Length ${cs.length}>>\nstream\n${cs}\nendstream`);
+    xr[im]=off;push(`${im} 0 obj\n<</Type/XObject/Subtype/Image/Width ${PX}/Height ${j.h}/ColorSpace/DeviceRGB/BitsPerComponent 8/Filter/DCTDecode/Length ${j.u.length}>>\nstream\n`);push(j.u);push("\nendstream\nendobj\n");
+  });
+  const total=3*N+3,xo=off;
+  push(`xref\n0 ${total}\n0000000000 65535 f \n`);
+  for(let n=1;n<total;n++)push(String(xr[n]).padStart(10,"0")+" 00000 n \n");
+  push(`trailer\n<</Size ${total}/Root 1 0 R>>\nstartxref\n${xo}\n%%EOF`);
+  return new Blob(parts,{type:"application/pdf"});
+}
+function hojaDownload(){
+  const pg=hojaPages("#ffffff");if(!pg.length)return;
+  const jp=pg.map(c=>{const b=atob(c.toDataURL("image/jpeg",.95).split(",")[1]),u=new Uint8Array(b.length);for(let k=0;k<b.length;k++)u[k]=b.charCodeAt(k);return{u,h:c.height}});
+  const blob=pdfFrom(jp,+(MM/25.4*72).toFixed(2)),a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);a.download=`amparos-postit-${tab==="proxima"?"proxima-semana":"esta-semana"}.pdf`;
+  document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+  toast("PDF descargado.");
+}
+$("#legend").onclick=e=>{if(e.target.closest("#onlyMine")){onlyMine=!onlyMine;render()}};
+$("#dl").onclick=()=>{
+  const d=hojaData();if(!d.length){toast("No hay expedientes pendientes para la hoja.");return}hoSel=new Set(d.map(g=>g.id));
+  $("#hSub").textContent=tab==="proxima"?"Próxima semana · expedientes pendientes en orden de fecha.":"Esta semana · expedientes pendientes en orden de fecha.";
+  hojaPaint();$("#ovHoja").classList.add("on");
+};
+$("#hWho").onclick=e=>{const b=e.target.closest("button[data-u]");if(!b)return;const u=b.dataset.u;hoSel.has(u)?hoSel.delete(u):hoSel.add(u);hojaPaint()};
+const closeHoja=()=>$("#ovHoja").classList.remove("on");
+$("#hX").onclick=$("#hCancel").onclick=closeHoja;
+$("#ovHoja").onclick=e=>{if(e.target.id==="ovHoja")closeHoja()};
+$("#hGo").onclick=hojaDownload;
 
 /* Aviso de confirmación */
 let askCb=null;
@@ -1360,6 +1482,7 @@ ROOT.querySelectorAll(".stats .stat").forEach(c=>c.onclick=()=>{tab=c.dataset.go
 document.addEventListener("keydown",e=>{
   if(e.key!=="Escape"||!ROOT.classList.contains("on"))return;
   if($("#ovAsk").classList.contains("on"))$("#aNo").click();
+  else if($("#ovHoja").classList.contains("on"))closeHoja();
   else if($("#ovForm").classList.contains("on"))$("#cancel").click();
   else if($("#ovDet").classList.contains("on"))closeDet();
 });
