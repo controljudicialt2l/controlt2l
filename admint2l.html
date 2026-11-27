@@ -183,7 +183,7 @@ input:disabled{opacity:.5;cursor:not-allowed}
   <section class="panel">
     <h3>Contraseña base</h3>
     <p class="hint">Es la contraseña temporal que das a cada persona. Al entrar por primera vez, cada quien crea la suya y tú nunca la sabrás. No se guarda en ningún lado: escríbela aquí cada vez que habilites o restablezcas.</p>
-    <div class="row2"><input id="base" type="password" placeholder="Mínimo 8 caracteres" autocomplete="new-password"><button class="btn g s" id="bshow" type="button">Mostrar</button></div>
+    <div class="row2"><input id="base" type="password" placeholder="Mínimo 4 caracteres" autocomplete="new-password"><button class="btn g s" id="bshow" type="button">Mostrar</button></div>
     <p class="hint" id="bst">Escríbela aquí. No se guarda: se usa al pulsar Habilitar o Restablecer.</p>
   </section>
 
@@ -291,17 +291,17 @@ async function load(){try{users=await API.listar()}catch(e){toast(e.message)}ren
 function baseSt(){
   const n=$("#base").value.length,e=$("#bst");
   if(!n){e.className="hint";e.textContent="Escríbela aquí. No se guarda: se usa al pulsar Habilitar o Restablecer."}
-  else if(n<8){e.className="hint warn";e.textContent=`Faltan ${8-n} caracteres para llegar al mínimo de 8.`}
+  else if(n<4){e.className="hint warn";e.textContent=`Faltan ${4-n} caracteres para llegar al mínimo de 4.`}
   else{e.className="hint ok";e.textContent="✓ Lista. Se usará al habilitar o restablecer (no se guarda en ningún lado)."}
 }
 $("#base").oninput=baseSt;
 $("#bshow").onclick=()=>{const i=$("#base"),h=i.type==="password";i.type=h?"text":"password";$("#bshow").textContent=h?"Ocultar":"Mostrar"};
-const okPass=()=>{const p=$("#base").value;return p.length>=8?p:null};
+const okPass=()=>{const p=$("#base").value;return p.length>=4?p:null};
 $("#mk").onclick=async()=>{
   const err=$("#err");err.textContent="";
   const u=$("#nu").value.trim().toLowerCase();
   if(!/^[a-z0-9._]{3,30}$/.test(u)){err.textContent="Usuario de 3 a 30 caracteres: minúsculas, números, punto o guion bajo.";return}
-  const p=okPass();if(!p){err.textContent="Primero escribe la contraseña base (mínimo 8 caracteres).";return}
+  const p=okPass();if(!p){err.textContent="Primero escribe la contraseña base (mínimo 4 caracteres).";return}
   const b=$("#mk");b.disabled=true;
   try{await API.crear(u,p);$("#nu").value="";toast(`Usuario ${u} habilitado. Entrará con la contraseña base.`);await load()}
   catch(e){err.textContent=e.message}
@@ -337,7 +337,7 @@ $("#list").onclick=e=>{
   }
   const b=e.target.closest("button[data-id]");if(!b)return;
   const u=users.find(x=>x.user_id===b.dataset.id);if(!u)return;
-  const p=okPass();if(!p){toast("Primero escribe la contraseña base arriba (mínimo 8 caracteres).");$("#base").focus();return}
+  const p=okPass();if(!p){toast("Primero escribe la contraseña base arriba (mínimo 4 caracteres).");$("#base").focus();return}
   ask(`¿Restablecer la contraseña de ${u.username}?`,"Su contraseña actual dejará de servir. Entrará con la contraseña base y deberá crear una nueva.","Restablecer",async()=>{
     try{await API.reset(u.user_id,p);toast(`${u.username}: ya puede entrar con la contraseña base.`);await load()}catch(er){toast(er.message)}
   });
