@@ -1335,7 +1335,7 @@ function hojaPaint(){
   $("#hWho").innerHTML=data.map(g=>`<button type="button" data-u="${g.id}" class="${hoSel.has(g.id)?"on":""}">${esc(g.name)} · ${g.list.length}</button>`).join("");
   const pg=hojaPages("#fff3a0");
   const box=$("#hNotes");box.innerHTML="";pg.forEach(c=>box.appendChild(c));
-  $("#hNote").textContent=pg.length?`Una sola tira de 84 mm de ancho (10 % más grande que un post-it de 76 mm); el largo crece con los expedientes. Arriba quedan 18 mm libres para engrapar. En el PDF todo va en blanco y negro, sin fondo.`:"Elige al menos un usuario.";
+  $("#hNote").textContent=pg.length?`Una sola tira de 84 mm de ancho (10 % más grande que un post-it de 76 mm); el largo crece con los expedientes. Arriba quedan 18 mm libres para engrapar. El PDF es una hoja Carta con la tira a tamaño real, arriba a la izquierda, y una línea punteada para recortar; imprímelo al 100 % (sin «ajustar a la página»). Va en blanco y negro, sin fondo.`:"Elige al menos un usuario.";
   $("#hGo").disabled=!pg.length;
 }
 function pdfFrom(jpgs,pt){/* jpgs: [{u,h}] */
@@ -1347,8 +1347,9 @@ function pdfFrom(jpgs,pt){/* jpgs: [{u,h}] */
   ob(1,"<</Type/Catalog/Pages 2 0 R>>");
   ob(2,`<</Type/Pages/Count ${N}/Kids[${jpgs.map((_,k)=>(3+3*k)+" 0 R").join(" ")}]>>`);
   jpgs.forEach((j,k)=>{
-    const pg=3+3*k,ct=4+3*k,im=5+3*k,ph=+(j.h/PX*pt).toFixed(2),cs=`q ${pt} 0 0 ${ph} 0 0 cm /Im0 Do Q`;
-    ob(pg,`<</Type/Page/Parent 2 0 R/MediaBox[0 0 ${pt} ${ph}]/Contents ${ct} 0 R/Resources<</XObject<</Im0 ${im} 0 R>>>>>>`);
+    const pg=3+3*k,ct=4+3*k,im=5+3*k,ph=+(j.h/PX*pt).toFixed(2),PW=612,PH=Math.max(792,Math.ceil(ph+72)),X=36,Y=+(PH-36-ph).toFixed(2),
+      cs=`q ${pt} 0 0 ${ph} ${X} ${Y} cm /Im0 Do Q q 0.5 G 0.6 w [4 3] 0 d ${X} ${Y} ${pt} ${ph} re S Q`;
+    ob(pg,`<</Type/Page/Parent 2 0 R/MediaBox[0 0 ${PW} ${PH}]/Contents ${ct} 0 R/Resources<</XObject<</Im0 ${im} 0 R>>>>>>`);
     ob(ct,`<</Length ${cs.length}>>\nstream\n${cs}\nendstream`);
     xr[im]=off;push(`${im} 0 obj\n<</Type/XObject/Subtype/Image/Width ${PX}/Height ${j.h}/ColorSpace/DeviceRGB/BitsPerComponent 8/Filter/DCTDecode/Length ${j.u.length}>>\nstream\n`);push(j.u);push("\nendstream\nendobj\n");
   });
