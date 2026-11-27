@@ -621,8 +621,9 @@ html.t2lmono #v-formatos .fic{background:linear-gradient(150deg,hsl(var(--h) cal
  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
  background:radial-gradient(900px 500px at 8% -8%,rgba(0,113,227,.10),transparent 60%),radial-gradient(800px 500px at 100% 0,rgba(175,82,222,.08),transparent 60%),var(--bg);background-attachment:fixed}
 .v.on{display:block}
-#v-prestamos .ic{background:linear-gradient(145deg,#0a84ff,#5e5ce6)}
-#v-amparos .ic{background:linear-gradient(145deg,#ff9f0a,#ff453a);box-shadow:0 6px 18px rgba(255,69,58,.35)}
+#v-prestamos .ic{background:linear-gradient(145deg,#0a84ff,#5e5ce6);box-shadow:0 6px 18px rgba(10,132,255,.35)}
+#v-formatos .ic{box-shadow:0 8px 20px rgba(94,92,230,.35)}
+#v-amparos .trib .ic{box-shadow:none}
 .v .back{cursor:pointer;padding:0}
 /* ===== Fondo igual al del Inicio (mismo degradado, según el color elegido) ===== */
 :root{--h:211;--s:100}
@@ -636,6 +637,7 @@ html.themed .trib{--accent:hsl(var(--h) calc(var(--s)*1%) 28%);--gold:hsl(var(--
 @media (prefers-color-scheme:dark){html.themed:not([data-theme="light"]) .trib{--accent:hsl(var(--h) calc(var(--s)*1%) 70%);--gold:hsl(var(--h) calc(var(--s)*.8%) 66%)}}
 html.themed[data-theme="dark"] .trib{--accent:hsl(var(--h) calc(var(--s)*1%) 70%);--gold:hsl(var(--h) calc(var(--s)*.8%) 66%)}
 html.themed .trib .ic{background:hsl(var(--h) calc(var(--s)*1%) 26%)}
+html.t2lmono #v-prestamos .ic,html.t2lmono #v-amparos .ic,html.t2lmono #v-formatos .ic{box-shadow:0 6px 18px hsl(var(--h) calc(var(--s)*1%) 40% / .30)}
 html.t2lmono #v-prestamos .ic,html.t2lmono #v-amparos .ic{background:linear-gradient(150deg,hsl(var(--h) calc(var(--s)*1%) 62%),hsl(calc(var(--h) + 14) calc(var(--s)*.92%) 44%))}
 
 </style>
