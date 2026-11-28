@@ -588,6 +588,8 @@ button.ghost{border:1px solid var(--line);background:var(--card);color:var(--tex
 #v-formatos .vh{display:flex;align-items:center;gap:12px;padding:2px 44px 12px 4px}
 #v-formatos .vh h2{padding:0;font-size:18px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #v-formatos .view{flex:1;min-height:0;overflow:auto;background:#fff;color:#1d1d1f;border-radius:14px;border:1px solid var(--line)}
+#v-formatos .view .docx-wrapper{background:#e9e9ee!important;padding:10px!important;display:flex;flex-direction:column;align-items:center}
+#v-formatos .view .docx-wrapper>section.docx{margin-bottom:10px!important;box-shadow:0 1px 6px rgba(0,0,0,.18)!important;flex:none}
 #v-formatos .view iframe{width:100%;height:100%;border:0;display:block}
 #v-formatos .doc{max-width:640px;margin:0 auto;padding:36px 32px;font:15px/1.6 Georgia,"Times New Roman",serif}
 #v-formatos .doc h4{font-size:19px;text-align:center;margin-bottom:6px}
@@ -726,6 +728,8 @@ html.t2lmono #v-prestamos .ic,html.t2lmono #v-amparos .ic,html.t2lmono #v-produc
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/docx-preview@0.3.3/dist/docx-preview.min.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@600;700&display=swap">
 </head>
@@ -1775,6 +1779,18 @@ async function pdfPages(u,box){
     return true;
   }catch(e){return false}
 }
+/* Word (.docx): se dibuja con el formato real (márgenes, tipos de letra, tablas) y se ajusta al ancho disponible */
+async function wordView(buf,box){
+  try{
+    for(let k=0;k<40&&!(window.docx&&window.docx.renderAsync);k++)await new Promise(r=>setTimeout(r,100));
+    if(!(window.docx&&window.docx.renderAsync))return false;
+    box.innerHTML="";const c=document.createElement("div");box.appendChild(c);
+    await window.docx.renderAsync(buf,c,null,{className:"docx",inWrapper:true,ignoreWidth:false,ignoreHeight:false,breakPages:true,useBase64URL:true,renderHeaders:true,renderFooters:true,renderFootnotes:true});
+    const w=c.querySelector(".docx-wrapper"),sec=c.querySelector("section.docx");
+    if(w&&sec){const need=sec.offsetWidth+20,have=box.clientWidth;if(need>have)w.style.zoom=String(have/need)}
+    return true;
+  }catch(e){return false}
+}
 async function open_(i){
   cur=i;$("#vT").textContent=i.nombre;const b=$("#vBody");
   b.innerHTML=`<div class="doc"><p>Cargando…</p></div>`;$("#ovView").classList.add("fon");
@@ -1783,6 +1799,7 @@ async function open_(i){
     if(i.tipo==="pdf"){const u=await API.pdfUrl(i);if(!(await pdfPages(u,b)))b.innerHTML=`<iframe title="${esc(i.nombre)}" src="${u}"></iframe>`}
     else{const buf=await API.wordBuf(i);
       if(!buf){b.innerHTML=`<div class="doc"><p>Este archivo es un Word antiguo (.doc) y no se puede mostrar aquí. Descárgalo para abrirlo.</p></div>`;return}
+      if(await wordView(buf,b))return;
       const r=await mammoth.convertToHtml({arrayBuffer:buf});b.innerHTML=`<div class="doc">${r.value||"<p>(Documento vacío)</p>"}</div>`}
   }catch(e){b.innerHTML=`<div class="doc"><p>No se pudo mostrar. ${esc(friendly(e))} Prueba con Descargar.</p></div>`}
 }
