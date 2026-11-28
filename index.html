@@ -702,6 +702,59 @@ html.t2lmono #v-formatos .fic{background:linear-gradient(150deg,hsl(var(--h) cal
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .v .pd-solid{color:#0e1420}}
 #v-productividad .ic{background:linear-gradient(145deg,#30d158,#0a9d8f);box-shadow:none}
 
+/*ASIS*/
+.v{--eco:#0a84ff;--cum:#e8449b;--ret:#d97500;--inc:#e5484d;--mad:#8e5ae6;--otr:#6e6e73}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .v{--eco:#4da3ff;--cum:#ff6bb3;--ret:#ffab33;--inc:#ff6b6f;--mad:#b48cff;--otr:#98989d}}
+:root[data-theme="dark"] .v{--eco:#4da3ff;--cum:#ff6bb3;--ret:#ffab33;--inc:#ff6b6f;--mad:#b48cff;--otr:#98989d}
+.v .as-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:0 0 14px}
+.v .as-seg{display:inline-flex;background:var(--fill);border-radius:10px;padding:2px}
+.v .as-seg button{font:inherit;padding:7px 16px;border:0;background:none;border-radius:8px;font-weight:600;font-size:14px;color:var(--muted);cursor:pointer}
+.v .as-seg button.on{background:var(--card);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.18)}
+.v .as-yr{display:flex;align-items:center;gap:6px}
+.v .as-yr b{font-size:19px;min-width:52px;text-align:center;font-variant-numeric:tabular-nums}
+.v .as-rb{width:34px;height:34px;border-radius:50%;border:0;background:var(--fill);color:var(--accent);font-size:18px;cursor:pointer;display:grid;place-items:center;padding:0}
+.v .as-rt{display:flex;gap:8px;align-items:center}
+.v .as-edt{font:inherit;font-weight:600;font-size:14px;padding:9px 16px;border-radius:999px;border:0;background:var(--fill);color:var(--accent);cursor:pointer}
+.v .as-edt.on{background:var(--accent);color:#fff}
+.v .as-hint{font-size:13px;color:var(--muted);background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 14px;margin:0 0 12px}
+.v .as-hint[hidden]{display:none}
+.v .as-sum{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:8px;margin:0 0 14px}
+.v .as-chip{font:inherit;color:var(--text);background:var(--card);border:2px solid transparent;border-radius:16px;padding:12px 12px 11px;box-shadow:var(--shadow);text-align:left;display:flex;flex-direction:column;gap:2px;min-width:0;cursor:pointer}
+.v .as-chip.on{border-color:var(--c)}
+.v .as-chip.off{opacity:.45}
+.v .as-chip i{width:9px;height:9px;border-radius:50%;background:var(--c);display:block;margin-bottom:5px}
+.v .as-chip b{font-size:26px;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.v .as-chip span{font-size:12px;color:var(--muted);overflow-wrap:anywhere}
+.v .as-chip em{font-style:normal;font-size:11px;font-weight:700;color:var(--accent);margin-top:3px}
+.v .as-main{display:flex;flex-direction:column;gap:12px}
+.v .as-card{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);overflow:hidden}
+.v .as-mh{padding:14px 18px 8px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between}
+.v .as-row{display:flex;align-items:center;gap:12px;padding:12px 18px;border-top:1px solid var(--line)}
+.v .as-dt{width:44px;flex:none;text-align:center;line-height:1.1}
+.v .as-dt b{display:block;font-size:22px;font-variant-numeric:tabular-nums}
+.v .as-dt span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.v .as-mid{flex:1;min-width:0}
+.v .as-tag{display:inline-block;font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;color:var(--c);background:color-mix(in srgb,var(--c) 15%,transparent)}
+.v .as-note{color:var(--muted);font-size:13px;margin-top:3px;overflow-wrap:anywhere}
+.v .as-del{font:inherit;color:var(--muted);width:32px;height:32px;border-radius:50%;border:0;background:none;font-size:17px;cursor:pointer}
+.v .as-del:hover{background:var(--fill)}
+.v .as-yes{font:inherit;color:var(--bad);font-weight:700;font-size:13px;padding:6px 10px;border-radius:999px;border:0;cursor:pointer;background:color-mix(in srgb,var(--bad) 14%,transparent)}
+.v .as-empty{padding:34px 18px;text-align:center;color:var(--muted)}
+.v .as-cal{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.v .as-mc{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:12px 12px 10px;box-shadow:var(--shadow)}
+.v .as-mc h3{font-size:13px;margin:0 0 6px;text-transform:capitalize}
+.v .as-g{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center;font-size:11px}
+.v .as-g .w{color:var(--muted);font-weight:600;font-size:10px;padding-bottom:2px}
+.v .as-g .d{aspect-ratio:1;display:grid;place-items:center;border-radius:50%;font-variant-numeric:tabular-nums}
+.v .as-g .d.m{background:var(--c);color:#fff;font-weight:700}
+.v .as-leg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--muted);margin-top:4px}
+.v .as-leg i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;background:var(--c)}
+.v .as-types{display:flex;flex-wrap:wrap;gap:8px}
+.v .as-types button{font:inherit;padding:8px 14px;border-radius:999px;background:var(--fill);color:var(--text);font-weight:600;font-size:14px;border:2px solid transparent;cursor:pointer}
+.v .as-types button.on{border-color:var(--c);color:var(--c);background:color-mix(in srgb,var(--c) 12%,transparent)}
+.v #frm label{margin-top:12px}
+#v-asistencia .ic{background:linear-gradient(145deg,#ff9f0a,#ff6a3d);box-shadow:none}
+
 .v{display:none;min-height:100vh;color:var(--text);-webkit-font-smoothing:antialiased;
  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
  background:radial-gradient(900px 500px at 8% -8%,rgba(0,113,227,.10),transparent 60%),radial-gradient(800px 500px at 100% 0,rgba(175,82,222,.08),transparent 60%),var(--bg);background-attachment:fixed}
@@ -722,8 +775,8 @@ html.themed .trib{--accent:hsl(var(--h) calc(var(--s)*1%) 28%);--gold:hsl(var(--
 @media (prefers-color-scheme:dark){html.themed:not([data-theme="light"]) .trib{--accent:hsl(var(--h) calc(var(--s)*1%) 70%);--gold:hsl(var(--h) calc(var(--s)*.8%) 66%)}}
 html.themed[data-theme="dark"] .trib{--accent:hsl(var(--h) calc(var(--s)*1%) 70%);--gold:hsl(var(--h) calc(var(--s)*.8%) 66%)}
 html.themed .trib .ic{background:hsl(var(--h) calc(var(--s)*1%) 26%)}
-html.t2lmono #v-prestamos .ic,html.t2lmono #v-amparos .ic,html.t2lmono #v-formatos .ic,html.t2lmono #v-productividad .ic{box-shadow:0 6px 18px hsl(var(--h) calc(var(--s)*1%) 40% / .30)}
-html.t2lmono #v-prestamos .ic,html.t2lmono #v-amparos .ic,html.t2lmono #v-productividad .ic{background:linear-gradient(150deg,hsl(var(--h) calc(var(--s)*1%) 62%),hsl(calc(var(--h) + 14) calc(var(--s)*.92%) 44%))}
+html.t2lmono #v-prestamos .ic,html.t2lmono #v-amparos .ic,html.t2lmono #v-formatos .ic,html.t2lmono #v-productividad .ic,html.t2lmono #v-asistencia .ic{box-shadow:0 6px 18px hsl(var(--h) calc(var(--s)*1%) 40% / .30)}
+html.t2lmono #v-prestamos .ic,html.t2lmono #v-amparos .ic,html.t2lmono #v-productividad .ic,html.t2lmono #v-asistencia .ic{background:linear-gradient(150deg,hsl(var(--h) calc(var(--s)*1%) 62%),hsl(calc(var(--h) + 14) calc(var(--s)*.92%) 44%))}
 
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js" defer></script>
@@ -1115,6 +1168,38 @@ html.t2lmono #v-prestamos .ic,html.t2lmono #v-amparos .ic,html.t2lmono #v-produc
   <h2 id="aMsg" style="font-size:19px;padding-right:0"></h2>
   <div class="mb"><button class="btn g" id="aNo">Cancelar</button><button class="btn" id="aYes">Aceptar</button></div>
 </div></div>
+
+<div class="toast" id="toast"></div>
+
+</div>
+<div class="v" id="v-asistencia">
+<a class="back" href="#" id="back" aria-label="Inicio" title="Inicio"><svg width="11" height="19" viewBox="0 0 12 20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-right:2px"><path d="M10 2L2 10l8 8"/></svg></a>
+
+<main class="wrap">
+  <div class="title">
+    <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18M9.5 15.5l1.8 1.8 3.4-3.6"/></svg></div>
+    <div><h1>Asistencia</h1><p class="sub">Faltas y retardos</p></div>
+  </div>
+  <div class="as-bar">
+    <div class="as-yr"><button class="as-rb" id="yp" type="button" aria-label="Año anterior">‹</button><b id="yt"></b><button class="as-rb" id="yn" type="button" aria-label="Año siguiente">›</button></div>
+    <div class="as-seg" id="tabs"><button type="button" class="on" data-v="lista">Lista</button><button type="button" data-v="cal">Calendario</button></div>
+    <div class="as-rt"><button class="as-edt" id="edt" type="button">Editar</button><button class="btn" id="add" type="button">+ Agregar</button></div>
+  </div>
+  <p class="as-hint" id="hint" hidden>Toca un tipo para mostrarlo u ocultarlo, o la ✕ de un registro para eliminarlo. Lo que ocultes no aparece al agregar ni en el resumen; los registros ya guardados se conservan.</p>
+  <div class="as-sum" id="sum"></div>
+  <div class="as-main" id="main"></div>
+</main>
+
+<div class="ov" id="ov">
+  <form class="sheet" id="frm" style="max-width:460px">
+    <h2>Registrar día</h2>
+    <label for="fd">Fecha</label><input type="date" id="fd" required>
+    <label>Tipo</label><div class="as-types" id="ft"></div>
+    <div id="hrw" hidden><label for="fh">Hora de llegada (opcional)</label><input type="time" id="fh"></div>
+    <label for="fn">Nota (opcional)</label><input type="text" id="fn" maxlength="200" placeholder="Ej. cita médica, tráfico, folio de incapacidad" autocomplete="off">
+    <div class="mb" style="margin-top:18px"><button class="btn g" id="cx" type="button">Cancelar</button><button class="btn" id="sv" type="submit">Guardar</button></div>
+  </form>
+</div>
 
 <div class="toast" id="toast"></div>
 
@@ -2153,18 +2238,123 @@ window.T2L.apps.productividad={open:async(session)=>{me=session.user.id;loading=
 </script>
 <script>
 (function(){
+const ROOT=document.getElementById('v-asistencia');
+
+const DEMO=false;
+const $=s=>ROOT.querySelector(s);
+const z2=n=>String(n).padStart(2,"0");
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+let me=null;
+
+
+const sb=window.T2L.sb;
+const fromRow=r=>({id:r.id,d:r.dia,t:r.tipo,n:r.nota||"",h:r.hora||""});
+const API={
+  async load(){const{data,error}=await sb.from("asistencia").select("id,dia,tipo,nota,hora").order("dia",{ascending:false});if(error)throw error;return(data||[]).map(fromRow)},
+  async add(e){const{data,error}=await sb.from("asistencia").insert({user_id:me,dia:e.d,tipo:e.t,nota:e.n||null,hora:e.h||null}).select("id,dia,tipo,nota,hora").single();if(error)throw error;return fromRow(data)},
+  async del(id){const{error}=await sb.from("asistencia").delete().eq("id",id).eq("user_id",me);if(error)throw error},
+  async loadCfg(){const{data,error}=await sb.from("asistencia_ajustes").select("ocultos").eq("user_id",me).maybeSingle();if(error)throw error;return(data&&data.ocultos)||[]},
+  async saveCfg(a){const{error}=await sb.from("asistencia_ajustes").upsert({user_id:me,ocultos:a,updated_at:new Date().toISOString()},{onConflict:"user_id"});if(error)throw error}
+};
+
+
+let tt;
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("on"),4500)}
+function friendly(e){
+  const c=e&&e.code,m=(e&&e.message)||"";
+  if(c==="42P01"||c==="PGRST205")return"Falta crear las tablas «asistencia» y «asistencia_ajustes» en Supabase.";
+  if(c==="42501")return"No tienes permiso para esa acción.";
+  if(/JWT|session|auth/i.test(m))return"Tu sesión expiró. Vuelve a iniciar sesión.";
+  return"No se pudo guardar. "+m;
+}
+
+const T=[["eco","Día económico","--eco"],["cum","Cumpleaños","--cum"],["ret","Retardo","--ret"],["inc","Incapacidad","--inc"],["mad","Día de la madre","--mad"],["otr","Otro","--otr"]];
+const TN=Object.fromEntries(T.map(t=>[t[0],t[1]]));
+const MES=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+const DOW=["lun","mar","mié","jue","vie","sáb","dom"];
+let E=[],hid=new Set(),editing=false,view="lista",flt=null,sel="eco",askDel=null,loading=true;
+let yr=new Date().getFullYear();
+const col=k=>`var(${(T.find(t=>t[0]===k)||T[5])[2]})`;
+const pd=s=>{const[a,b,c]=s.split("-").map(Number);return new Date(a,b-1,c)};
+const nm=k=>TN[k]||"Otro";
+function row(e){
+  const d=pd(e.d),w=DOW[(d.getDay()+6)%7];
+  const extra=e.t==="ret"&&e.h?`Llegada ${esc(e.h)}`+(e.n?" · ":""):"";
+  const del=!editing?"":askDel===e.id?`<button class="as-yes" type="button" data-y="${esc(e.id)}">Eliminar</button>`:`<button class="as-del" type="button" data-x="${esc(e.id)}" aria-label="Eliminar">✕</button>`;
+  return`<div class="as-row"><div class="as-dt"><b>${d.getDate()}</b><span>${w}</span></div><div class="as-mid"><span class="as-tag" style="--c:${col(e.t)}">${esc(nm(e.t))}</span>${extra||e.n?`<div class="as-note">${extra}${esc(e.n)}</div>`:""}</div>${del}</div>`;
+}
+function render(){
+  $("#yt").textContent=yr;
+  $("#edt").textContent=editing?"Listo":"Editar";$("#edt").classList.toggle("on",editing);$("#hint").hidden=!editing;
+  const ys=E.filter(e=>e.d.startsWith(yr+"-"));
+  $("#sum").innerHTML=T.filter(([k])=>editing||!hid.has(k)).map(([k,n])=>{const c=ys.filter(e=>e.t===k).length;return`<button type="button" class="as-chip ${flt===k?"on":""} ${editing&&hid.has(k)?"off":""}" data-k="${k}" style="--c:${col(k)}"><i></i><b>${c}</b><span>${n}</span>${editing?`<em>${hid.has(k)?"Oculto":"Visible"}</em>`:""}</button>`}).join("");
+  if(loading){$("#main").innerHTML=`<div class="as-card"><div class="as-empty">Cargando…</div></div>`;return}
+  const L=ys.filter(e=>!flt||e.t===flt).sort((a,b)=>a.d<b.d?1:a.d>b.d?-1:0);
+  if(view==="lista"){
+    if(!L.length){$("#main").innerHTML=`<div class="as-card"><div class="as-empty">${flt?"Sin registros de "+nm(flt).toLowerCase()+" en "+yr+".":"No hay registros en "+yr+". Usa + Agregar para el primero."}</div></div>`;return}
+    const by={};L.forEach(e=>{const m=+e.d.slice(5,7);(by[m]||(by[m]=[])).push(e)});
+    $("#main").innerHTML=Object.keys(by).sort((a,b)=>b-a).map(m=>`<div class="as-card"><div class="as-mh"><span>${MES[m-1]}</span><span>${by[m].length}</span></div>${by[m].map(row).join("")}</div>`).join("");
+  }else{
+    let h='<div class="as-cal">';
+    for(let m=0;m<12;m++){
+      const first=(new Date(yr,m,1).getDay()+6)%7,dim=new Date(yr,m+1,0).getDate();
+      let g=DOW.map(d=>`<div class="w">${d[0]}</div>`).join("")+"<div></div>".repeat(first);
+      for(let d=1;d<=dim;d++){const k=`${yr}-${z2(m+1)}-${z2(d)}`;const e=ys.find(x=>x.d===k&&(!flt||x.t===flt));
+        g+=e?`<div class="d m" style="--c:${col(e.t)}" title="${esc(nm(e.t))}">${d}</div>`:`<div class="d">${d}</div>`}
+      h+=`<div class="as-mc"><h3>${MES[m]}</h3><div class="as-g">${g}</div></div>`;
+    }
+    h+='</div><div class="as-leg">'+T.filter(([k])=>!hid.has(k)).map(([k,n])=>`<span><i style="--c:${col(k)}"></i>${n}</span>`).join("")+"</div>";
+    $("#main").innerHTML=h;
+  }
+}
+$("#sum").onclick=async e=>{const b=e.target.closest("[data-k]");if(!b)return;const k=b.dataset.k;
+  if(editing){const had=hid.has(k);had?hid.delete(k):hid.add(k);if(flt===k)flt=null;render();
+    try{await API.saveCfg([...hid])}catch(er){had?hid.add(k):hid.delete(k);render();toast(friendly(er))}return}
+  flt=flt===k?null:k;render()};
+$("#edt").onclick=()=>{editing=!editing;askDel=null;render()};
+$("#main").onclick=async e=>{const x=e.target.closest("[data-x]"),y=e.target.closest("[data-y]");
+  if(x){askDel=x.dataset.x;render();return}
+  if(y){const id=y.dataset.y;askDel=null;try{await API.del(id);E=E.filter(z=>z.id!==id);toast("Registro eliminado.")}catch(er){toast(friendly(er))}render();return}
+  if(askDel){askDel=null;render()}};
+$("#tabs").onclick=e=>{const b=e.target.closest("button");if(!b)return;view=b.dataset.v;ROOT.querySelectorAll("#tabs button").forEach(x=>x.classList.toggle("on",x===b));render()};
+$("#yp").onclick=()=>{yr--;render()};$("#yn").onclick=()=>{yr++;render()};
+function types(){$("#ft").innerHTML=T.filter(([k])=>!hid.has(k)).map(([k,n])=>`<button type="button" data-t="${k}" class="${sel===k?"on":""}" style="--c:${col(k)}">${n}</button>`).join("");$("#hrw").hidden=sel!=="ret"}
+$("#ft").onclick=e=>{const b=e.target.closest("[data-t]");if(!b)return;sel=b.dataset.t;types()};
+const closeF=()=>$("#ov").classList.remove("on");
+$("#add").onclick=()=>{editing=false;askDel=null;render();const t=new Date();$("#fd").value=`${t.getFullYear()}-${z2(t.getMonth()+1)}-${z2(t.getDate())}`;$("#fn").value="";$("#fh").value="";
+  sel=(T.find(t=>!hid.has(t[0]))||T[0])[0];types();$("#ov").classList.add("on")};
+$("#cx").onclick=closeF;
+$("#ov").onclick=e=>{if(e.target.id==="ov")closeF()};
+document.addEventListener("keydown",e=>{if(e.key!=="Escape"||!ROOT.classList.contains("on"))return;closeF()});
+$("#frm").onsubmit=async e=>{e.preventDefault();const d=$("#fd").value;if(!d)return;
+  const btn=$("#sv");btn.disabled=true;
+  try{const r=await API.add({d,t:sel,n:$("#fn").value.trim(),h:sel==="ret"?$("#fh").value:""});E.push(r);yr=+d.slice(0,4);closeF();toast("Registro guardado.")}
+  catch(er){toast(friendly(er))}
+  btn.disabled=false;render()};
+
+
+$("#back").onclick=e=>{e.preventDefault();window.T2L.back()};
+render();
+window.T2L.apps.asistencia={open:async(session)=>{me=session.user.id;loading=true;editing=false;askDel=null;render();try{E=await API.load();hid=new Set(await API.loadCfg())}catch(e){toast(friendly(e))}loading=false;render()}};
+})();
+</script>
+<script>
+(function(){
   var $=function(s){return document.querySelector("#home "+s)};
   var T=window.T2L;
   var G={
     prestamos:'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9.5 13h5M12.5 10.8 14.7 13l-2.2 2.2"/>',
     amparos:'<path d="M12 3l7 3v5.2c0 4.4-3 7.8-7 9.8-4-2-7-5.4-7-9.8V6z"/><path d="m9 12 2.2 2.2L15.2 10"/>',
     productividad:'<path d="M5 20V11M12 20V4M19 20v-6"/>',
+    asistencia:'<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18M9.5 15.5l1.8 1.8 3.4-3.6"/>',
     formatos:'<path d="M8 3h6.5L19 7.5V17H8z"/><path d="M14.5 3v4.5H19M5 7v14h11M11 12.5h5M11 15.5h3"/>'
   };
   var APPS=[
     {id:"prestamos",name:"Préstamo de expedientes",a:"#0a84ff",b:"#5e5ce6"},
     {id:"amparos",name:"Amparos",a:"#ff9f0a",b:"#ff453a"},
     {id:"productividad",name:"Productividad",a:"#30d158",b:"#0a9d8f"},
+    {id:"asistencia",name:"Asistencia",a:"#ff9f0a",b:"#ff6a3d"},
     {id:"formatos",name:"Formatos",a:"#bf5af2",b:"#5e5ce6"}
   ];
   var THEMES=[
