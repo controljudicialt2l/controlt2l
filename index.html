@@ -1036,8 +1036,8 @@ html.t2lmono #v-prestamos .ic,html.t2lmono #v-amparos .ic,html.t2lmono #v-produc
   <label>Nombre</label><input class="f" id="fN" placeholder="Ej. Formato de admisiones" autocomplete="off">
   <label>Descripción (opcional)</label><input class="f" id="fD" placeholder="Para qué se usa" autocomplete="off">
   <label>Archivo (PDF o Word)</label>
-  <div class="drop" id="drop"><b id="dropT">Elegir archivo</b><span id="dropS">.pdf, .doc o .docx</span></div>
-  <input type="file" id="fF" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden>
+  <div class="drop" id="drop"><b id="dropT">Elegir archivo</b><span id="dropS">.pdf o .docx</span></div>
+  <input type="file" id="fF" accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden>
   <div class="ferr" id="fE"></div>
   <div class="fmb"><button class="fbtn fg" id="fC">Cancelar</button><button class="fbtn" id="fS">Guardar</button></div>
 </div></div>
@@ -1827,12 +1827,13 @@ window.addEventListener("pointerup",endDrag);window.addEventListener("pointercan
 
 /* ---- agregar ---- */
 let file=null;
-$("#add").onclick=()=>{file=null;$("#fN").value="";$("#fD").value="";$("#fE").textContent="";$("#dropT").textContent="Elegir archivo";$("#dropS").textContent=".pdf, .doc o .docx";$("#ovForm").classList.add("fon");$("#fN").focus()};
+$("#add").onclick=()=>{file=null;$("#fN").value="";$("#fD").value="";$("#fE").textContent="";$("#dropT").textContent="Elegir archivo";$("#dropS").textContent=".pdf o .docx";$("#ovForm").classList.add("fon");$("#fN").focus()};
 $("#fC").onclick=$("#fX").onclick=()=>$("#ovForm").classList.remove("fon");
 $("#drop").onclick=()=>$("#fF").click();
 $("#fF").onchange=e=>{const f=e.target.files[0];if(!f)return;
   const ext=(f.name.split(".").pop()||"").toLowerCase();
-  if(!["pdf","doc","docx"].includes(ext)){$("#fE").textContent="Solo PDF o Word (.pdf, .doc, .docx).";return}
+  if(ext==="doc"){$("#fE").textContent="Los .doc antiguos no se pueden ver en la página. Ábrelo en Word, Archivo → Guardar como → .docx, y súbelo otra vez.";return}
+  if(!["pdf","doc","docx"].includes(ext)){$("#fE").textContent="Solo PDF o Word (.pdf, .docx).";return}
   if(f.size>MAXMB*1048576){$("#fE").textContent=`El archivo pesa más de ${MAXMB} MB.`;return}
   file=f;$("#fE").textContent="";$("#dropT").textContent=f.name;$("#dropS").textContent=kb(f.size);
   if(!$("#fN").value)$("#fN").value=f.name.replace(/\.[^.]+$/,"")};
