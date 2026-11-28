@@ -205,7 +205,7 @@ input:disabled{opacity:.5;cursor:not-allowed}
       <p class="hint">Lo verán todos los usuarios en Formatos, solo para consultar y descargar. PDF o Word, hasta 15 MB.</p>
       <div class="row2"><input id="dN" placeholder="Nombre del formato" autocomplete="off"><input id="dD" placeholder="Descripción (opcional)" autocomplete="off"></div>
       <div class="pick"><button class="btn g s" id="dPick" type="button">Elegir archivo</button><span id="dFile">Ningún archivo</span><button class="btn" id="dUp">Subir</button></div>
-      <input type="file" id="dF" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden>
+      <input type="file" id="dF" accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden>
       <div class="err" id="dErr"></div>
     </section>
     <h3 style="font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:600;margin:26px 10px 8px">Formatos generales <span id="dcnt"></span></h3>
@@ -361,7 +361,8 @@ $("#atabs").onclick=e=>{const b=e.target.closest("button");if(!b)return;
 $("#dPick").onclick=()=>$("#dF").click();
 $("#dF").onchange=e=>{const f=e.target.files[0];if(!f)return;
   const ext=(f.name.split(".").pop()||"").toLowerCase();const er=$("#dErr");er.textContent="";
-  if(!["pdf","doc","docx"].includes(ext)){er.textContent="Solo PDF o Word (.pdf, .doc, .docx).";return}
+  if(ext==="doc"){er.textContent="Los .doc antiguos no se pueden ver en la página. Ábrelo en Word, Archivo → Guardar como → .docx, y súbelo otra vez.";return}
+  if(!["pdf","doc","docx"].includes(ext)){er.textContent="Solo PDF o Word (.pdf, .docx).";return}
   if(f.size>15*1048576){er.textContent="El archivo pesa más de 15 MB.";return}
   dfile=f;$("#dFile").textContent=f.name+" · "+kb(f.size);if(!$("#dN").value)$("#dN").value=f.name.replace(/\.[^.]+$/,"")};
 $("#dUp").onclick=async()=>{
